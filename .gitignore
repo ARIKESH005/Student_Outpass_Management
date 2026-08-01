@@ -1,0 +1,29 @@
+# IDE & Editor files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Maven & Build output files
+**/target/
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs & Temporary files
+*.log
+logs/
+*.tmp
+*.bak
+
+# Environment & Secrets
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db

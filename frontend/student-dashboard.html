@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Outpass Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand"><i class="fa-solid fa-graduation-cap"></i> Student Portal</div>
+            <nav class="sidebar-nav">
+                <a href="student-dashboard.html" class="active"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a href="my-requests.html"><i class="fa-solid fa-clock-rotate-left"></i> My Requests</a>
+            </nav>
+            <div class="user-settings-wrapper">
+                <button class="user-settings-btn">
+                    <span><i class="fa-solid fa-gear"></i> Settings</span>
+                    <i class="fa-solid fa-chevron-up" style="font-size: 0.75rem;"></i>
+                </button>
+                <div class="user-dropdown-menu">
+                    <button class="user-dropdown-item danger" onclick="deleteAccount()"><i class="fa-solid fa-user-xmark"></i> Delete Account</button>
+                    <button class="user-dropdown-item" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="header animate-fade-in">
+                <div class="header-title">
+                    <h2>Apply for Outpass</h2>
+                    <p>Fill out the form below to request permission.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+                    <div class="user-info">
+                        <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                        <span id="username-display">Student</span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-card animate-fade-in" style="animation-delay: 0.1s; max-width: 800px;">
+                <form onsubmit="applyOutpass(event)">
+                    <div class="form-group">
+                        <label for="reason"><i class="fa-solid fa-comment-dots" style="color:var(--primary)"></i> Reason for Outpass</label>
+                        <input type="text" id="reason" class="form-control" placeholder="Enter a valid reason" required>
+                    </div>
+                    <div style="display:flex; gap:1.5rem; flex-wrap: wrap;">
+                        <div class="form-group" style="flex:1; min-width: 200px;">
+                            <label for="outDate"><i class="fa-regular fa-calendar-minus" style="color:var(--primary)"></i> Out Date</label>
+                            <input type="date" id="outDate" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="flex:1; min-width: 200px;">
+                            <label for="returnDate"><i class="fa-regular fa-calendar-plus" style="color:var(--primary)"></i> Return Date</label>
+                            <input type="date" id="returnDate" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentPhone"><i class="fa-solid fa-phone" style="color:var(--primary)"></i> Parent Phone Number</label>
+                        <input type="tel" id="parentPhone" class="form-control" placeholder="10-digit mobile number" required pattern="[0-9]{10}">
+                    </div>
+                    <button type="submit" class="btn" style="width:auto; margin-top: 1rem;">
+                        <i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i> Submit Request
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/app.js"></script>
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const icon = document.getElementById('theme-icon');
+        if(icon) icon.className = savedTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth('STUDENT');
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('outDate').min = today;
+            document.getElementById('returnDate').min = today;
+            
+            document.getElementById('outDate').addEventListener('change', function() {
+                document.getElementById('returnDate').min = this.value;
+            });
+        });
+    </script>
+</body>
+</html>

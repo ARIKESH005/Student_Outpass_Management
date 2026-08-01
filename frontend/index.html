@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Outpass Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Login Form -->
+        <div class="auth-card" id="login-form">
+            <div class="auth-header">
+                <h1><i class="fa-solid fa-right-to-bracket"></i> Welcome Back</h1>
+                <p>Login to your account</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" class="form-control" placeholder="Username or Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></button>
+            </form>
+            <div class="auth-switch">
+                <p>Don't have an account? <a href="#" onclick="toggleAuthMode()">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div class="auth-card" id="register-form" style="display: none;">
+            <div class="auth-header">
+                <h1><i class="fa-solid fa-user-plus"></i> Create Account</h1>
+                <p>Register as a new student</p>
+            </div>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" class="form-control" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-department">Department</label>
+                    <select id="reg-department" class="form-control" required>
+                        <option value="" disabled selected>Select your department</option>
+                        <option value="ECE">ECE</option>
+                        <option value="CSE">CSE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="AIDS">AIDS</option>
+                        <option value="AIML">AIML</option>
+                        <option value="MECH">MECH</option>
+                        <option value="AGRI">AGRI</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="Create a password" required minlength="6">
+                </div>
+                <button type="submit" class="btn">Register <i class="fa-solid fa-check" style="margin-left:8px;"></i></button>
+            </form>
+            <div class="auth-switch">
+                <p>Already have an account? <a href="#" onclick="toggleAuthMode()">Login here</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+    <script>
+        // Init theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        window.onload = () => {
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            if (token && role) {
+                if (role === 'STUDENT') window.location.href = 'student-dashboard.html';
+                if (role === 'ADMIN') window.location.href = 'admin-dashboard.html';
+            }
+        };
+
+        function toggleAuthMode() {
+            const loginForm = document.getElementById('login-form');
+            const regForm = document.getElementById('register-form');
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                regForm.style.display = 'none';
+                loginForm.classList.add('animate-fade-in');
+            } else {
+                loginForm.style.display = 'none';
+                regForm.style.display = 'block';
+                regForm.classList.add('animate-fade-in');
+            }
+        }
+    </script>
+</body>
+</html>
