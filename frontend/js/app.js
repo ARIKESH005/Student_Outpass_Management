@@ -1,4 +1,4 @@
-const API_URL = 'https://student-outpass-management-1.onrender.com/api';
+const API_URL = 'https://student-outpass-management.onrender.com/api';
 
 // Setup common fetch headers
 function getHeaders() {
