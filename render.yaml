@@ -1,0 +1,27 @@
+services:
+  # Spring Boot Backend (Docker Web Service)
+  - type: web
+    name: student-outpass-backend
+    runtime: docker
+    dockerContext: ./student-outpass-management
+    dockerfilePath: ./student-outpass-management/Dockerfile
+    plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: JWT_SECRET
+        value: 94f5757969e4a36b5ec632514bcbe3e85e1b764b88939c381f953047d3d82dbb
+      - key: JWT_EXPIRATION
+        value: "86400000"
+
+  # Static Site Frontend
+  - type: static
+    name: student-outpass-frontend
+    buildCommand: null
+    staticPublishPath: ./frontend
