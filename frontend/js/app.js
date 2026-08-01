@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8081/api';
+const API_URL = 'https://student-outpass-management-1.onrender.com/api';
 
 // Setup common fetch headers
 function getHeaders() {
@@ -289,9 +289,8 @@ function showQrCode(qrCodeId) {
         return;
     }
     
-    // Construct the public scanner URL using the computer's network IP (10.208.233.50) instead of localhost
-    // This allows a physical smartphone on the same WiFi to reach the Spring Boot backend
-    const publicScannerUrl = `http://10.208.233.50:8081/api/public/scan/${qrCodeId}`;
+    // Construct the public scanner URL using the live production backend API
+    const publicScannerUrl = `${API_URL}/public/scan/${qrCodeId}`;
     
     Swal.fire({
         title: 'Your Gate Pass',
