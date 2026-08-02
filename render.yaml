@@ -6,6 +6,7 @@ services:
     dockerContext: ./student-outpass-management
     dockerfilePath: ./student-outpass-management/Dockerfile
     plan: free
+    healthCheckPath: /api/auth/health
     envVars:
       - key: SPRING_DATASOURCE_URL
         sync: false
@@ -23,5 +24,6 @@ services:
   # Static Site Frontend
   - type: static
     name: student-outpass-frontend
-    buildCommand: null
+    buildCommand: echo "No build step needed"
     staticPublishPath: ./frontend
+
