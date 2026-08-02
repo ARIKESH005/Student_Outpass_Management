@@ -17,9 +17,11 @@ WORKDIR /app
 # Copy the built jar from build stage
 COPY --from=build /app/target/student-outpass-management-*.jar app.jar
 
-# Render assigns port dynamically via PORT env variable (defaults to 8080)
-ENV PORT=8080
+# Render assigns port dynamically via PORT env variable (defaults to 10000)
+ENV PORT=10000
 EXPOSE ${PORT}
 
-# Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the Spring Boot application, binding to the Render-assigned PORT
+CMD java -jar app.jar --server.port=$PORT
+
+
